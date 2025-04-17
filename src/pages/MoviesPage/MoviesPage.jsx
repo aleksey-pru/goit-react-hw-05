@@ -12,38 +12,23 @@ import MovieList from "../../components/MovieList/MovieList";
 const MoviesPage = () => {
   const [movies, setMovies] = useState([]);
   const [genres, setGenres] = useState([]);
-  // const [genresMap, setGenresMap] = useState({});
+  const [genresMap, setGenresMap] = useState({});
   const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
   const location = useLocation();
-  const {
-    from,
-    backdrop_path,
-    original_title,
-    overview,
-    // genres = [],
-  } = location.state || {};
+  const { from, backdrop_path, original_title, overview } =
+    location.state || {};
   const query = searchParams.get("query") || "";
-  // useEffect(() => {
-  //   const loadGenres = async () => {
-  //     try {
-  //       const genres = await fetchGenres();
-  //       const genreMap = genres.reduce((acc, genre) => {
-  //         acc[genre.id] = genre.name;
-  //         return acc;
-  //       }, {});
-  //       setGenresMap(genreMap);
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   };
-  //   loadGenres();
-  // }, [genres]);
+
   useEffect(() => {
     const loadGenres = async () => {
       try {
         const genresData = await fetchGenres();
-        setGenres(genresData);
+        const genreMap = {};
+        genresData.forEach((genre) => {
+          genreMap[genre.id] = genre.name;
+        });
+        setGenresMap(genreMap);
       } catch (error) {
         console.error("Error loading genres:", error);
       }
@@ -56,13 +41,23 @@ const MoviesPage = () => {
     const loadSearch = async () => {
       try {
         const response = await searchMovies(query);
-        setMovies(response);
+
+        const enrichedMovies = response.map((movie) => ({
+          ...movie,
+          genres:
+            movie.genre_ids?.map((id) => ({
+              id,
+              name: genresMap[id] || "Unknown",
+            })) || [],
+        }));
+
+        setMovies(enrichedMovies);
       } catch (error) {
         console.log(error);
       }
     };
     loadSearch();
-  }, [query]);
+  }, [query, genresMap]);
   const handleSubmit = (values, action) => {
     setSearchParams({ query: values.query });
     action.resetForm();
