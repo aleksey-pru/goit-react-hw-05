@@ -20,3 +20,32 @@ export const fetchGenres = async () => {
   );
   return response.data.genres;
 };
+
+export const fetchCast = async (movieId) => {
+  const response = await axios.get(
+    `https://api.themoviedb.org/3/movie/${movieId}/credits`,
+    options
+  );
+  return response.data;
+};
+
+export const fetchReviews = async (movieId) => {
+  const response = await axios.get(
+    `https://api.themoviedb.org/3/movie/${movieId}/reviews`,
+    options
+  );
+  return response.data.results;
+};
+
+export const searchMovies = async (query) => {
+  const response = await axios.get(
+    "https://api.themoviedb.org/3/search/movie",
+    {
+      ...options,
+      params: {
+        query: query,
+      },
+    }
+  );
+  return response.data.results;
+};

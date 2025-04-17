@@ -1,6 +1,7 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
-const MovieList = ({ data }) => {
+const MovieList = ({ data, genres }) => {
+  const location = useLocation();
   return (
     <ul>
       {data.map((item) => (
@@ -8,6 +9,7 @@ const MovieList = ({ data }) => {
           <Link
             to={`/movies/${item.id.toString()}`}
             state={{
+              from: location,
               backdrop_path: item.backdrop_path,
               original_title: item.original_title,
               overview: item.overview,

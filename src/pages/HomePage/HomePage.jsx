@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { fetchGenres, fetchMovies } from "../../api";
-import { Link } from "react-router-dom";
+
 import MovieList from "../../components/MovieList/MovieList";
 
 const HomePage = () => {

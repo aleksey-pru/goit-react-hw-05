@@ -2,6 +2,7 @@
   color: white;
   font-size: 20px;
   text-decoration: none;
+  padding: 10px;
 }
 .navLinks {
   display: flex;
@@ -9,5 +10,7 @@
   padding-bottom: 30px;
 }
 .active {
-  color: red;
+  border: 2px solid white;
+  border-radius: 20px;
+  padding: 10px;
 }
