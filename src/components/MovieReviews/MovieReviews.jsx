@@ -24,7 +24,7 @@ const MovieReviews = () => {
       ) : (
         <ul className={s.ulContainer}>
           {reviews.map((review) => (
-            <li key={review.id}>
+            <li className={s.review} key={review.id}>
               <h4>Author: {review.author}</h4>
               <p>{review.content}</p>
             </li>

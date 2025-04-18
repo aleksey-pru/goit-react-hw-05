@@ -8,6 +8,7 @@ import {
   useSearchParams,
 } from "react-router-dom";
 import MovieList from "../../components/MovieList/MovieList";
+import s from "./MoviesPage.module.css";
 
 const MoviesPage = () => {
   const [movies, setMovies] = useState([]);
@@ -69,9 +70,16 @@ const MoviesPage = () => {
     <div>
       <button onClick={handleGoBack}>← Go back</button>
       <Formik onSubmit={handleSubmit} initialValues={{ query: "" }}>
-        <Form>
-          <Field type="text" name="query" placeholder="Search movie..." />
-          <button type="submit">Search</button>
+        <Form className={s.formContainer}>
+          <Field
+            className={s.inputField}
+            type="text"
+            name="query"
+            placeholder="Search movie..."
+          />
+          <button className={s.submitBtn} type="submit">
+            Search
+          </button>
         </Form>
       </Formik>
 
